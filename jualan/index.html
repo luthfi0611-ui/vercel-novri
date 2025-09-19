@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TokoNvr — Koleksi Premium</title>
+  <meta name="description" content="TokoNvr — Toko online premium minimalis & elegan. Demo single-file." />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ====== Variables & Reset ====== */
+    :root{
+      --bg:#f6f8fa;
+      --panel:#ffffff;
+      --muted:#6b7280;
+      --accent:#0ea5a4;
+      --accent-2:#6366f1;
+      --glass: rgba(255,255,255,0.6);
+      --radius:14px;
+      --shadow: 0 8px 30px rgba(2,6,23,0.08);
+      --max-w:1200px;
+      --glass-2: rgba(255,255,255,0.4);
+    }
+    [data-theme="dark"]{
+      --bg:#0b1220;
+      --panel:#0f1724;
+      --muted:#9aa6b2;
+      --glass: rgba(255,255,255,0.03);
+      --shadow: 0 20px 50px rgba(0,0,0,0.6);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{font-family:Inter, Poppins, system-ui, -apple-system, "Segoe UI", Roboto; background:linear-gradient(180deg,var(--bg), #eef2f7); color: #0b1220; -webkit-font-smoothing:antialiased; transition:background .3s,color .3s}
+    [data-theme="dark"] body{color:#e6eef6}
+
+    .wrap{max-width:var(--max-w);margin:28px auto;padding:28px}
+
+    /* ====== Header ====== */
+    header{display:flex;align-items:center;gap:20px;position:sticky;top:12px;z-index:60;padding:14px;border-radius:16px;background:linear-gradient(90deg, rgba(255,255,255,0.7), rgba(255,255,255,0.35));backdrop-filter: blur(6px);box-shadow:var(--shadow)}
+    [data-theme="dark"] header{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo-mark{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:#fff;font-weight:700;font-size:16px;}
+    .brand h1{font-size:18px;font-weight:700;letter-spacing:0.2px}
+    nav{margin-left:auto;display:flex;align-items:center;gap:14px}
+    .nav-link{color:var(--muted);font-weight:600;padding:8px 12px;border-radius:10px}
+    .nav-link:hover{color:var(--accent)}
+    .search{display:flex;gap:8px;align-items:center;background:var(--panel);padding:8px;border-radius:10px;box-shadow:0 6px 18px rgba(2,6,23,0.04)}
+    .search input{border:0;background:transparent;outline:none;padding:6px 8px;width:220px;font-weight:500;color:inherit}
+    .icon-btn{background:var(--panel);border-radius:10px;padding:8px;display:inline-grid;place-items:center;position:relative;box-shadow:0 6px 18px rgba(2,6,23,0.04)}
+    .badge{position:absolute;top:-6px;right:-6px;background:#ef4444;color:#fff;border-radius:999px;padding:3px 7px;font-weight:700;font-size:12px}
+
+    /* ====== HERO ====== */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center;margin-top:28px}
+    .hero-left{padding:12px 6px}
+    .eyebrow{display:inline-block;padding:6px 12px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;font-weight:700;margin-bottom:16px;font-size:13px}
+    .hero h2{font-size:44px;line-height:1.02;margin-bottom:12px;font-weight:700}
+    .hero p{color:var(--muted);max-width:640px;margin-bottom:18px;font-size:16px}
+    .hero-actions{display:flex;gap:12px}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;padding:12px 20px;border-radius:12px;border:0;font-weight:700;box-shadow:0 12px 30px rgba(6,182,212,0.12)}
+    .btn-ghost{padding:10px 16px;border-radius:12px;border:1px solid rgba(11,18,32,0.06);background:transparent;font-weight:700}
+
+    .hero-right{border-radius:18px;overflow:hidden;box-shadow:var(--shadow)}
+    .hero-right img{width:100%;height:360px;object-fit:cover;display:block}
+
+    /* ====== Controls ====== */
+    .controls{display:flex;gap:12px;align-items:center;margin-top:28px}
+    .select, .input{padding:10px;border-radius:12px;border:1px solid rgba(11,18,32,0.06);background:var(--panel);font-weight:600}
+    .spacer{flex:1}
+
+    /* ====== Grid Produk ====== */
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:18px}
+    .product{background:var(--panel);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:transform .28s, box-shadow .28s;position:relative;opacity:0;transform:translateY(18px)}
+    .product.show{opacity:1;transform:translateY(0)}
+    .media{height:260px;overflow:hidden;background:linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.02))}
+    .media img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+    .product:hover{transform:translateY(-8px)}
+    .product:hover .media img{transform:scale(1.06)}
+    .product-body{padding:14px 14px 18px;display:flex;flex-direction:column;gap:10px}
+    .title{font-weight:700;font-size:15px}
+    .desc{color:var(--muted);font-size:13px}
+    .price-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .price{font-weight:800;color:var(--accent);font-size:16px}
+    .old{font-size:13px;color:var(--muted);text-decoration:line-through;margin-left:8px;font-weight:600;opacity:.8}
+    .ctas{display:flex;gap:8px;margin-top:6px}
+    .btn-add{flex:1;padding:10px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;font-weight:700}
+    .btn-view{padding:10px;border-radius:10px;border:1px solid rgba(11,18,32,0.06);background:transparent;font-weight:700;color:var(--muted)}
+
+    /* ====== Mini cart (floating) ====== */
+    .cart-float{position:fixed;right:22px;bottom:22px;background:linear-gradient(180deg,var(--panel), #fff);padding:12px;border-radius:14px;box-shadow:0 18px 40px rgba(2,6,23,0.12);z-index:120;display:flex;flex-direction:column;gap:10px;width:360px;max-width:calc(100% - 40px)}
+    .cart-header{display:flex;justify-content:space-between;align-items:center}
+    .cart-items{display:flex;flex-direction:column;gap:12px;max-height:280px;overflow:auto;padding-right:6px}
+    .cart-item{display:flex;gap:12px;align-items:center;background:var(--glass);padding:8px;border-radius:10px}
+    .cart-item img{width:56px;height:56px;border-radius:8px;object-fit:cover}
+    .cart-summary{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+    .checkout{padding:10px;border-radius:10px;border:0;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;font-weight:700;width:100%}
+
+    /* ====== Footer ====== */
+    footer{margin-top:36px;padding:28px;text-align:center;color:var(--muted)}
+
+    /* ====== Tiny helpers ====== */
+    .badge-pill{font-size:12px;padding:6px 8px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;font-weight:700;display:inline-block}
+    .muted{color:var(--muted)}
+    .hidden{display:none}
+
+    /* ====== Responsive ====== */
+    @media(max-width:1024px){.grid{grid-template-columns:repeat(2,1fr)}.hero{grid-template-columns:1fr}}
+    @media(max-width:640px){
+      header{padding:12px}
+      .search input{width:120px}
+      .grid{grid-template-columns:1fr}
+      .hero h2{font-size:28px}
+      .hero-right img{height:200px}
+      .cart-float{width:92%;left:4%;right:4%;bottom:14px}
+    }
+  </style>
+</head>
+<body data-theme="">
+  <div class="wrap">
+    <!-- HEADER -->
+    <header>
+      <div class="brand">
+        <div class="logo-mark">NV</div>
+        <div>
+          <h1>TokoNvr</h1>
+          <div class="muted" style="font-size:12px;margin-top:4px">Koleksi Premium — Desain & Kualitas</div>
+        </div>
+      </div>
+
+      <nav>
+        <a class="nav-link" href="#">Home</a>
+        <a class="nav-link" href="#produk">Produk</a>
+        <a class="nav-link" href="#about">Tentang</a>
+
+        <div class="search" role="search" aria-label="Cari produk">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="opacity:.6"><path d="M21 21l-4.35-4.35" stroke="#111827" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <input id="searchInput" placeholder="Cari produk, mis. 'sneakers'">
+        </div>
+
+        <div class="icon-btn" id="wishBtn" title="Wishlist">❤</div>
+        <div class="icon-btn" id="cartToggle" title="Keranjang">
+          🛒
+          <div id="cartCount" class="badge hidden">0</div>
+        </div>
+        <div class="icon-btn" id="themeToggle" title="Mode gelap">🌙</div>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" aria-label="Intro">
+      <div class="hero-left">
+        <span class="eyebrow">Koleksi Terpilih</span>
+        <h2>Produk premium — desain minimalis, kualitas maksimal.</h2>
+        <p>Pilihan curated untuk tampilan yang elegan dan fungsional. Foto produk besar, deskripsi singkat, dan pengalaman belanja yang nyaman.</p>
+        <div class="hero-actions" style="margin-top:8px">
+          <button class="btn-primary" onclick="document.getElementById('produk').scrollIntoView({behavior:'smooth'})">Belanja Sekarang</button>
+          <button class="btn-ghost" onclick="alert('Terima kasih!')">Hubungi Kami</button>
+        </div>
+      </div>
+      <div class="hero-right" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1520975918318-3f8201d02d8b?w=1400&q=60" alt="Hero image" loading="lazy"/>
+      </div>
+    </section>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+      <select id="sort" class="select" aria-label="Urutkan produk">
+        <option value="featured">Rekomendasi</option>
+        <option value="price-asc">Harga: Rendah → Tinggi</option>
+        <option value="price-desc">Harga: Tinggi → Rendah</option>
+      </select>
+      <input id="minPrice" class="input" placeholder="Harga min (Rp)" inputmode="numeric" />
+      <input id="maxPrice" class="input" placeholder="Harga max (Rp)" inputmode="numeric" />
+      <div class="spacer"></div>
+      <div class="muted" style="font-size:14px">Gratis retur 7 hari • Pengiriman terpercaya</div>
+    </div>
+
+    <!-- PRODUK GRID -->
+    <section id="produk">
+      <h3 style="margin-top:20px;font-size:18px">Produk Unggulan</h3>
+      <div class="grid" id="grid">
+        <!-- Produk akan di-render lewat JS untuk modular -->
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" style="margin-top:40px;text-align:center">
+      <h3 style="font-size:20px">Tentang TokoNvr</h3>
+      <p class="muted" style="max-width:760px;margin:12px auto 0">TokoNvr adalah toko keluarga yang memilih produk berkualitas. Kami fokus pada desain clean, bahan nyaman, dan pengiriman yang rapi. Nikmati layanan purna jual yang ramah.</p>
+    </section>
+
+    <footer>
+      <div style="margin-top:28px" class="muted">TokoNvr © 2025 · Semua hak cipta.</div>
+    </footer>
+  </div>
+
+  <!-- CART (floating panel) -->
+  <div id="cartPanel" class="cart-float hidden" aria-hidden="true" role="dialog" aria-label="Keranjang belanja">
+    <div class="cart-header">
+      <div style="font-weight:700">Keranjang</div>
+      <div style="font-size:13px;color:var(--muted);cursor:pointer" id="closeCart">✕</div>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-summary">
+      <div class="muted">Total</div>
+      <div id="cartTotal" style="font-weight:800">Rp 0</div>
+    </div>
+    <button id="checkout" class="checkout">Checkout (Simulasi)</button>
+  </div>
+
+  <script>
+    /* ====== Data Produk (dummy) ====== */
+    const PRODUCTS = [
+      {id:1,title:'Sneakers Putih Classic',desc:'Kain breathable, sol ringan',price:450000,img:'https://images.unsplash.com/photo-1606813907291-1b2a7d5081c4?w=900&q=60'},
+      {id:2,title:'Jam Tangan Elegance',desc:'Bodi stainless & tali kulit',price:720000,img:'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&q=60'},
+      {id:3,title:'Headphone Wireless Pro',desc:'ANC, bass mantap',price:680000,img:'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=900&q=60'},
+      {id:4,title:'Tas Ransel Urban',desc:'Kompartemen laptop 15″',price:580000,img:'https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=900&q=60'},
+      {id:5,title:'Kacamata Vintage',desc:'Frame ringan, UV protection',price:300000,img:'https://images.unsplash.com/photo-1516594798947-e65505dbb29d?w=900&q=60'},
+      {id:6,title:'Jaket Denim Classic',desc:'Potongan regular fit',price:550000,img:'https://images.unsplash.com/photo-1528701800489-20be9c54f71b?w=900&q=60'},
+      {id:7,title:'Parfum Signature',desc:'Aroma hangat & tahan lama',price:420000,img:'https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=60'},
+      {id:8,title:'Sepatu Formal Leather',desc:'Kulit asli, finishing halus',price:670000,img:'https://images.unsplash.com/photo-1503602642458-232111445657?w=900&q=60'},
+      {id:9,title:'Handbag Minimal',desc:'Model elegan, multi kantong',price:750000,img:'https://images.unsplash.com/photo-1522336572468-97b06e8ef143?w=900&q=60'},
+      {id:10,title:'Topi Casual',desc:'Bahan nyaman & warna netral',price:150000,img:'https://images.unsplash.com/photo-1533681704175-92349f1b5806?w=900&q=60'},
+      {id:11,title:'Dompet Kulit Slim',desc:'Kapasitas 6 kartu',price:220000,img:'https://images.unsplash.com/photo-1612817159949-195b98dfc51a?w=900&q=60'},
+      {id:12,title:'Tas Selempang',desc:'Ringan, ukuran pas harian',price:340000,img:'https://images.unsplash.com/photo-1520975918318-3f8201d02d8b?w=900&q=60'},
+    ];
+
+    /* ====== Render Produk ke grid ====== */
+    const grid = document.getElementById('grid');
+
+    function renderProducts(list){
+      grid.innerHTML = '';
+      list.forEach(p => {
+        const el = document.createElement('article');
+        el.className = 'product';
+        el.innerHTML = `
+          <div class="media" aria-hidden="true"><img src="${p.img}" alt="${p.title}" loading="lazy"></div>
+          <div class="product-body">
+            <div>
+              <div class="title">${p.title}</div>
+              <div class="desc">${p.desc}</div>
+            </div>
+            <div>
+              <div class="price-row">
+                <div class="price">Rp ${p.price.toLocaleString()}</div>
+                <div class="badge-pill muted">Stok tersedia</div>
+              </div>
+              <div class="ctas">
+                <button class="btn-add" data-id="${p.id}">Tambah</button>
+                <button class="btn-view" data-id="${p.id}">Lihat</button>
+              </div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(el);
+      });
+      attachProductListeners();
+      observeProducts(); // animate in
+    }
+
+    renderProducts(PRODUCTS);
+
+    /* ====== Product animations (IntersectionObserver) ====== */
+    function observeProducts(){
+      const items = document.querySelectorAll('.product');
+      const obs = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting) e.target.classList.add('show');
+        });
+      },{threshold:0.15});
+      items.forEach(i => obs.observe(i));
+    }
+
+    /* ====== Simple Search + Sort + Filter ====== */
+    const searchInput = document.getElementById('searchInput');
+    const sortSelect = document.getElementById('sort');
+    const minPriceInput = document.getElementById('minPrice');
+    const maxPriceInput = document.getElementById('maxPrice');
+
+    function applyControls(){
+      let filtered = PRODUCTS.slice();
+      const q = (searchInput.value || '').toLowerCase().trim();
+      if(q) filtered = filtered.filter(p => p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
+      const minP = parseInt(minPriceInput.value) || 0;
+      const maxP = parseInt(maxPriceInput.value) || Infinity;
+      filtered = filtered.filter(p => p.price >= minP && p.price <= maxP);
+      const s = sortSelect.value;
+      if(s === 'price-asc') filtered.sort((a,b)=>a.price-b.price);
+      if(s === 'price-desc') filtered.sort((a,b)=>b.price-a.price);
+      renderProducts(filtered);
+    }
+
+    searchInput.addEventListener('input', debounce(applyControls, 220));
+    sortSelect.addEventListener('change', applyControls);
+    minPriceInput.addEventListener('input', debounce(applyControls, 350));
+    maxPriceInput.addEventListener('input', debounce(applyControls, 350));
+
+    function debounce(fn, ms=200){ let t; return (...a) => { clearTimeout(t); t = setTimeout(()=>fn(...a), ms); } }
+
+    /* ====== Cart logic (simple) ====== */
+    let CART = JSON.parse(localStorage.getItem('nv_cart') || '[]');
+
+    const cartToggle = document.getElementById('cartToggle');
+    const cartPanel = document.getElementById('cartPanel');
+    const cartItemsWrap = document.getElementById('cartItems');
+    const cartCount = document.getElementById('cartCount');
+    const cartTotal = document.getElementById('cartTotal');
+    const closeCart = document.getElementById('closeCart');
+
+    function attachProductListeners(){
+      document.querySelectorAll('.btn-add').forEach(btn => {
+        btn.removeEventListener('click', onAddClick);
+        btn.addEventListener('click', onAddClick);
+      });
+      document.querySelectorAll('.btn-view').forEach(btn=>{
+        btn.removeEventListener('click', onViewClick);
+        btn.addEventListener('click', onViewClick);
+      });
+    }
+
+    function onAddClick(e){
+      const id = +e.currentTarget.dataset.id;
+      const product = PRODUCTS.find(p=>p.id===id);
+      if(!product) return;
+      CART.push({...product, uid: Date.now() + Math.random()});
+      saveCart();
+      renderCart();
+      showCart();
+    }
+
+    function onViewClick(e){
+      const id = +e.currentTarget.dataset.id;
+      const p = PRODUCTS.find(x=>x.id===id);
+      if(!p) return alert(`${p.title}\n\n${p.desc}\n\nHarga: Rp ${p.price.toLocaleString()}`);
+    }
+
+    function saveCart(){ localStorage.setItem('nv_cart', JSON.stringify(CART)); }
+
+    function renderCart(){
+      cartItemsWrap.innerHTML = '';
+      if(CART.length === 0){
+        cartItemsWrap.innerHTML = `<div class="muted" style="padding:12px;text-align:center">Keranjang kosong — tambahkan produk.</div>`;
+        cartCount.classList.add('hidden');
+        cartPanel.classList.remove('active');
+      } else {
+        cartCount.classList.remove('hidden');
+        cartCount.textContent = CART.length;
+        CART.forEach(item => {
+          const node = document.createElement('div');
+          node.className = 'cart-item';
+          node.innerHTML = `
+            <img src="${item.img}" alt="${item.title}">
+            <div style="flex:1">
+              <div style="font-weight:700">${item.title}</div>
+              <div style="font-size:13px;color:var(--muted)">Rp ${item.price.toLocaleString()}</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <button style="background:transparent;border:0;color:var(--muted);cursor:pointer" data-uid="${item.uid}" class="remove">hapus</button>
+            </div>
+          `;
+          cartItemsWrap.appendChild(node);
+        });
+      }
+      updateTotal();
+      // attach remove listeners
+      document.querySelectorAll('.remove').forEach(btn=>{
+        btn.addEventListener('click', (ev)=>{
+          const uid = ev.currentTarget.dataset.uid;
+          CART = CART.filter(x => x.uid != uid);
+          saveCart();
+          renderCart();
+        });
+      });
+    }
+
+    function updateTotal(){
+      const total = CART.reduce((s,i)=>s + (i.price || 0), 0);
+      cartTotal.textContent = `Rp ${total.toLocaleString()}`;
+      // small animation on total change
+      cartTotal.animate([{transform:'translateY(-4px)'},{transform:'translateY(0)'}],{duration:220});
+      cartCount.textContent = CART.length;
+      if(CART.length === 0) cartCount.classList.add('hidden'); else cartCount.classList.remove('hidden');
+    }
+
+    function showCart(){ cartPanel.classList.remove('hidden'); cartPanel.style.display = 'flex'; cartPanel.setAttribute('aria-hidden','false'); }
+    function hideCart(){ cartPanel.classList.add('hidden'); cartPanel.style.display = ''; cartPanel.setAttribute('aria-hidden','true'); }
+
+    cartToggle.addEventListener('click', ()=>{
+      if(cartPanel.classList.contains('hidden')) { renderCart(); showCart(); } else { hideCart(); }
+    });
+    closeCart.addEventListener('click', hideCart);
+
+    // checkout simulation
+    document.getElementById('checkout').addEventListener('click', ()=>{
+      if(CART.length === 0){ alert('Keranjang kosong. Tambahkan produk dulu.'); return; }
+      alert(`Checkout simulasi\nTotal: ${cartTotal.textContent}\nTerima kasih atas pesanan (simulasi).`);
+      CART = []; saveCart(); renderCart(); hideCart();
+    });
+
+    // load saved cart on start
+    renderCart();
+
+    /* ====== Theme toggle (dark mode) ====== */
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', ()=>{
+      const cur = document.body.getAttribute('data-theme') === 'dark' ? '' : 'dark';
+      document.body.setAttribute('data-theme', cur);
+      themeToggle.textContent = cur === 'dark' ? '☀️' : '🌙';
+    });
+
+    /* ====== Tiny UX: Enter search to filter ====== */
+    document.getElementById('searchInput').addEventListener('keydown', (e) => {
+      if(e.key === 'Enter') applyControls();
+    });
+
+    /* ====== Init: small staggered animation after DOM loaded ====== */
+    window.addEventListener('load', ()=>{
+      // tiny stagger when products render
+      setTimeout(()=> {
+        document.querySelectorAll('.product').forEach((el,i)=>{
+          setTimeout(()=> el.classList.add('show'), i * 60);
+        });
+      }, 120);
+    });
+  </script>
+</body>
+</html>
